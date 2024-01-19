@@ -1,0 +1,5 @@
+2021-06-28 09:33:48.481000
+INFO:django.utils.autoreload:C:\Users\Mhammouda\Desktop\Django\Automation_Task\Automation_Task\list_routeurs\views.py changed, reloading.
+DEBUG:asyncio:Using proactor: IocpProactor
+2021-06-28 09:36:59.027000set interfaces GE-1/0/1 unit -7 family inet policer input Bandwidth3M2021-06-28 09:37:05.615000set interfaces GE-1/1/1 unit 2 family inet policer input Bandwidth2MINFO:django.utils.autoreload:C:\Users\Mhammouda\Desktop\Django\Automation_Task\Automation_Task\list_routeurs\views.py changed, reloading.
+DEBUG:asyncio:Using proactor: IocpProactor

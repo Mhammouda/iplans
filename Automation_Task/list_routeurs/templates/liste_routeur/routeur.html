@@ -1,0 +1,28 @@
+ 
+
+<H1 class="pt-5 pl-10">Liste NE40</H1>
+<div class="container-sm">
+<table class="table">
+  <thead>
+    <tr>
+       
+      <th scope="col">Nom Routeur</th>
+      <th scope="col">LOo routeur</th>
+      <th scope="col">Catégorie</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in NE40 %}
+    <tr>
+       
+      <td>{{item.name}}</td>
+      <td>{{item.Loopback}}</td>
+      <td>{{item.category}}</td>
+    </tr>
+  {% endfor %}
+    
+   
+  </tbody>
+</table>
+</div>
+ 

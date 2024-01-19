@@ -1,0 +1,27 @@
+  
+ {% include 'liste_routeur/head.html' %}
+ 
+
+
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+ <div class="row g-3 needs-validation">
+ <h3>Are you sure !!!! </h3>
+<form action="{%  url 'SCADMINFN' %}" method="POST">
+   {% csrf_token %} 
+   
+   <a href="{% url 'home' %}" class="btn btn-success">Cancel</a>
+  <button type="submit" class="btn btn-danger">Yes</button>
+ 
+  
+</form>
+</div>
+  </div>
+</div>
+ 
+ 
+
+
+ </body>
+ </html>

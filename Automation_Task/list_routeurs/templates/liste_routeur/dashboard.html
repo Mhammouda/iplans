@@ -1,0 +1,225 @@
+
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+    
+  
+    
+{% for message in messages %}
+  
+ <div class="alert {{ message.tags }} alert" role="alert" >
+  <span class="alert-icon"><span class="visually-hidden">Success</span></span>
+  <p> {{ message }}</p>
+</div>
+{% endfor %}
+   <div class="container">    
+<div class="container-fluid">
+
+                    <!-- Page Heading -->
+                   
+
+                 <div class="row   row-cols-md-5 g-3">
+            <div class="col">
+
+                              <span class="badge  bg-secondary">Reset DIM_IP   <a href="{% url 'SCADMINBBIP' %}" class="link-success"><img src="{% static '/images/icons8-delete-64.png' %}" width="30px" alt="My image"> </a></span>
+                        
+
+</div>
+
+  <div class="col">
+
+      <span class="badge  bg-primary">Reset DIM_SW   <a href="{% url 'SCADMINSW' %}" class="link-success"><img src="{% static '/images/icons8-delete-64.png' %}" width="30px" alt="My image"> </a></span>
+
+                        
+                                 
+                            </div>
+                     <div class="col">
+                        <span class="badge  bg-success">Reset TRAFIC ROUTEUR  <a href="{% url 'SCADMINBBTRAFIC' %}" class="link-success"><img src="{% static '/images/icons8-delete-64.png' %}" width="30px" alt="My image"> </a></span>
+
+
+
+                            </div>
+
+                          <div class="col">
+                              <span class="badge    bg-danger">
+
+                                  Reset DIM_FN   <a href="{% url 'SCADMINFN' %}" class="link-success"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image" width="30px" > </a></span>
+                    </div>
+
+
+                        <!-- Tasks Card Example -->
+                        
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col">
+                            <span class="badge  bg-secondary">
+                      Reset DIM_BH  <a href="{% url 'SCADMINBH' %}" class="link-success"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image" width="30px"> </a>
+                            </span>
+                        </div>
+  <div class="col">
+
+      <span class="badge  bg-light">
+
+
+                                                  Reset DIM_CPU   <a href="{% url 'SCADMINCPU' %}" class="link-success"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image" width="30px"> </a> </span>
+
+
+
+                                 
+
+                        </div>
+<div class="col">
+
+    <span class="badge  bg-info"> UPDATE SCRIPT USER   <a href="{% url 'SCADMIN' %}" class="link-success"><img src="{% static '/images/icons8-refresh-60.png' %}" alt="My image" width="30px"> </a></span></div>
+                        
+
+                 </div>
+   
+       <br>
+
+     <div class="container">
+    
+        <div class="col">
+          <h3 id="search">DEVICE <span class="badge bg-danger"> {{nbrN40}}</span>
+           <h6><a href="{% url 'create' %}"class="btn btn-warning btn-sm"><i class="bi bi-bootstrap-reboot"></i><h7 class="fw-bold     "> ADD DEVICE</a>
+           </h6>
+        
+              
+                  <table id="example" class="table table-dark  table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th scope="col" >Nom DEVICE</th>
+      <th scope="col">LOo DEVICE</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in NE40 %}
+    <tr>
+
+      <td>{{item.name}}</td>
+      <td>{{item.Loopback}}</td>
+      <td>{{item.category}}</td>
+      <td> <a href="{% url 'update' item.id %}" class="link-success"><img src="{% static '/images/icons8-refresh-60.png' %}" alt="My image"></a>
+      <a href="{% url 'deleterouteur' item.id %}" class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+
+    </tr>
+  {% endfor %}
+
+
+  </tbody>
+</table>
+
+
+                 </div>
+             
+              
+          
+
+        <div class="col">
+           <h2 class="fw-bold  font-monospace  " >USER <span class="badge bg-danger">  {{nbr_user}}</span></h4>
+ 
+  
+   <h6> <a href="{% url 'register' %}"class="btn btn-success btn-sm"> </i><h7 class="fw-bold     "> ADD USER</a>
+    </h6>
+     <table id="example1" class="table table-dark  table-bordered" style="width:100%">
+  <thead>
+    <tr>
+
+      <th scope="col">login</th>
+       
+      <th scope="col">email</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in user %}
+    <tr>
+
+      <td>{{item.username}}</td>
+     
+     
+      <td>{{item.email}}</td>
+           <td> <a  href="{% url 'updateuser' item.id %}" class="link-success"><img src="{% static '/images/icons8-refresh-60.png' %}" alt="My image"></a>
+      <a href="{% url 'deleteuser' item.id %}" class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td>
+
+
+    </tr>
+
+    {% endfor %}
+
+
+  </tbody>
+</table>
+       
+      
+ 
+        <div class="col">
+           <h2 class="fw-bold  font-monospace  " >SWITCH <span class="badge bg-danger">  {{nbrsw}}</span></h4>
+ 
+  
+   <h6><a href="{% url 'createswitch' %}"class="btn btn-warning btn-sm"><i class="bi bi-bootstrap-reboot"></i><h7 class="fw-bold     "> ADD SWITCH</a>
+    </h6>
+     <table id="example2" class="table table-dark  table-bordered" style="width:100%">
+  <thead>
+    <tr>
+
+      <th scope="col">namedevice</th>
+       
+      <th scope="col">loopswitch</th>
+      <th scope="col">interfaceswrt</th>
+<th scope="col">routeur</th>
+<th scope="col">interfacertsw</th>
+<th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in switch %}
+    <tr>
+
+      <td>{{item.namedevice}}</td>
+     
+     
+      <td>{{item.loopswitch}}</td>
+      <td>{{item.interfaceswrt}}</td>
+      <td>{{item.routeur}}</td>
+      <td>{{item.interfacertsw}}</td>
+           <td> <a  href="{% url 'updateswitch' item.id %}" class="link-success"><img src="{% static '/images/icons8-refresh-60.png' %}" alt="My image"></a>
+      <a  href="{% url 'deleteswitch' item.id %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td>
+
+
+    </tr>
+
+    {% endfor %}
+
+
+  </tbody>
+</table>
+
+
+    {% block content %}
+
+
+    {% endblock %}
+
+{% include 'liste_routeur/footer.html' %}
+ 
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+
+$(document).ready(function() {
+$('#example1').DataTable();
+} );
+$(document).ready(function() {
+$('#example2').DataTable();
+} );
+</script>
+    
+ 
+</body>
+</html>

@@ -1,0 +1,223 @@
+ {% include 'liste_routeur/head.html' %}
+
+  {% load static  %}
+ {% if messages %}
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+
+
+<style>
+
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+ border-color: #00e7eb;
+}
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+  margin: 1.5rem 0;
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+}
+
+</style>
+<body style="background-color: #eef3f2">
+<div class="container">
+<div class="card ">
+
+  <h1> <span class="badge badge-primary">CHANGE_LOG_NEW_SERVICE  </span>  <a  onclick="exportTableToExcel('example1','CHANGE LOG NEW SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+
+  <table id="example1" class="table   table-sm table-dark table-bordered">
+        <thead>
+				<tr>
+                         <td> history_user</td>
+ <td> IPLANS_ID</td>
+                     <td> CLIENT</td>
+                     <td> DEVICE</td>
+
+<td>
+    script
+</td>
+
+		      <td>   history_date</td>
+
+                     <td> history_type</td>
+
+
+      </tr>
+        </thead>
+        <tbody>
+
+
+  {% for item in box_content_history  %}
+
+
+     <tr >
+ <td> {{item.history_user}}</td>
+      <td> {{item.id}}</td>
+      <td> {{item.nomClient}}</td>
+       <td> {{item.routeur}}</td>
+      <td ><small style="font-size:small   ;font-family: Courier, Monospace;  ">
+           <textarea style=" resize: both;color: white ; background-color: #2a2e33;  box-sizing: border-box;  border: 2px solid white;  border-radius: 4px;"  disabled   rows="1" >
+               {{item.generate}}
+           </textarea></small></td>
+
+      <td> {{item.history_date }}</td>
+
+       <td>      {% if item.history_type == "+" %}
+    <span class="badge rounded-pill bg-success"><small style="font-size:xx-small  " >Created</small></span>
+    {% elif item.history_type == "-" %}
+     <span class="badge rounded-pill bg-primary"><small style="font-size:xx-small  ">Deleted</small></span>
+    {% elif item.history_type == "~" %}
+
+     <span class="badge rounded-pill bg-light"><small style="font-size:xx-small   " >Changed</small></span>
+
+{% endif %}</td>
+
+
+
+    {% endfor %}
+    </table></div>
+<div class="card ">
+<h1> <span class="badge badge-primary">CHANGE_LOG_UPDATE</span>  <a  onclick="exportTableToExcel('example2','CHANGE LOG UPDATE SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+       <table id="example2" class="table   table-sm table-dark table-bordered">
+        <thead>
+				<tr>
+                         <td> history_user</td>
+ <td> IPLANS_ID</td>
+                     <td> Interface</td>
+                     <td> DEVICE</td>
+
+<td>script</td>
+
+		      <td>   history_date</td>
+
+                     <td> history_type</td>
+
+
+      </tr>
+        </thead>
+        <tbody>
+
+
+  {% for item in script_content_history  %}
+
+
+     <tr >
+ <td> {{item.history_user}}</td>
+      <td> {{item.id}}</td>
+      <td> {{item.interface}}</td>
+       <td> {{item.routeur}}</td>
+         <td ><small style="font-size:small   ;font-family: Courier, Monospace;  ">
+           <textarea style=" resize: both;color: white ; background-color: #2a2e33;  box-sizing: border-box;  border: 2px solid #ccc;  border-radius: 4px;"  disabled   rows="1" >
+               {{item.generate}}
+           </textarea></small></td>
+
+      <td> {{item.history_date }}</td>
+
+       <td>      {% if item.history_type == "+" %}
+    <span class="badge rounded-pill bg-success"><small style="font-size:xx-small  " >Created</small></span>
+    {% elif item.history_type == "-" %}
+     <span class="badge rounded-pill bg-primary"><small style="font-size:xx-small  ">Deleted</small></span>
+    {% elif item.history_type == "~" %}
+
+     <span class="badge rounded-pill bg-light"><small style="font-size:xx-small   " >Changed</small></span>
+
+{% endif %}</td>
+
+
+
+    {% endfor %}
+    </table>
+       </div>
+
+
+
+
+<script>
+
+
+
+$(document).ready(function() {
+$('#example1').DataTable({
+    "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]],
+});
+} );
+$(document).ready(function() {
+$('#example2').DataTable({
+    "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]],
+});
+} );
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+
+    // Create download link element
+    downloadLink = document.createElement("a");
+
+    document.body.appendChild(downloadLink);
+
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+        // Setting the file name
+        downloadLink.download = filename;
+
+        //triggering the function
+        downloadLink.click();
+    }
+}
+</script>
+         </div></div></div>

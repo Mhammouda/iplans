@@ -1,0 +1,57 @@
+ {% include 'liste_routeur/head.html' %}
+   {% load static  %}
+ {% if messages %}
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+
+<br>
+<div class="container mb-3  ">
+  <div class="col">
+    <h1> <span class="badge badge-warning">Update Service Update </span></h1>
+     
+
+
+
+<div class="row g-3 needs-validation">
+<form action="" method="POST">
+   {% csrf_token %}
+   <table class="table table-dark table-bordered" style="width:100%">
+                      <tr>
+             <td>Architecture Actuelle</td>
+                  <td>  <select      id="monselectarch" name="monselectarch" value="" >
+  <option selected>SANS_NAT_AVEC_CPE_@31</option>
+
+
+</select> </td>
+                  </tr>
+                    <tr>
+             <td>Select Range @Public: </td>
+                  <td>  <select      id="monselectadd" name="monselectadd" value="" >
+  <option selected>__NA__</option>
+
+  <option >/29 Public Address</option>
+  <option >/28 Public Address</option>
+</select> </td>
+                  </tr>
+
+
+  </table>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+ </body>
+ </html>

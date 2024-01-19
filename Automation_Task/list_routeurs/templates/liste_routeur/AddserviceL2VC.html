@@ -1,0 +1,202 @@
+  
+ {% include 'liste_routeur/head.html' %}
+   
+ 
+
+
+
+ {% if messages %}
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+
+   
+<style>
+
+
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card_1 {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+  margin: 1.5rem 0;
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+
+</style>
+<body style="background-color: #eef3f2">
+  <div class="container">
+
+        <div class="row">
+
+       <div class="card_1">
+          <h3>  SERVICE L2VC </h3>
+
+          <form method="POST" class="mb-3">
+             {% csrf_token %}
+              <table class="table table-sm table-active">
+              <tr>
+    <td>NOM_CLIENT: </td>
+     <td>{{form.description}}</td></tr>
+<tr>
+
+<td>ROUTEUR: </td>
+     <td>            {{form.routeur}} <button type="submit" class="btn btn-secondary btn-sm" name="btn3"><h7 class="fw-bold  " >SYNC_RT <i class="bi bi-printer"></i></button></td>
+     
+   
+     </tr>
+       <tr>
+             <td>Select SWITCH: </td>
+                  <td>  <select id="monselectSW" name="monselectSW" value="">
+                    {% for switch in switch %} 
+                     <option >   {{switch}}  </option>
+                     {% endfor %}
+                                </select> <button type="submit" class="btn btn-secondary btn-sm" name="btn4"><h7 class="fw-bold  " >SYNC_SW <i class="bi bi-printer"></i></button>
+                                 <button type="submit" class="btn btn-secondary btn-sm" name="btn22222"><h7 class="fw-bold  " >IGNORE_SW<i class="bi bi-printer"></i></button>
+                                </td></tr>
+            <tr>
+             <td>Select PORT: </td>
+                  <td>  <select id="monselect" name="monselect" value="">
+                    {% for interface in interface %} 
+                     <option >   {{interface}}  </option>
+                     {% endfor %}
+                                </select></td></tr>
+
+              <tr>
+           <td>VLAN:</td>
+           <td>{{form.vlan}}</td>
+           
+           </tr>
+                    
+
+
+<td>TRANS:</td>
+           <td>{{form.trans}}</td>
+           
+           </tr>
+<tr>
+           
+           <td>DISTINATION:</td>
+           <td>{{form.dist}}</td>
+           
+           </tr>
+          
+</table>
+
+<button type="submit" class="btn btn-primary" name="btnform2" ><h7 class="fw-bold  " >ADD SERVICE <i class="bi bi-printer"></i></button>
+          </form>
+ </div>
+  </div>
+   <div class="row">
+ <div class="card_1">
+       
+          <h3> SHOW CONFIG </h3>
+ 
+          <p class="original" style="width:900px; height:200px;" rows="10" cols="20" name="conf" form="conf" id="conf">{{result}}</p>
+
+          
+ 
+
+         <h4>  UP CONFIG </h4>
+  <textarea style="resize: both;color: white ; background-color: #2a2e33;  box-sizing: border-box;  border: 2px solid white;  border-radius: 4px;"  disabled   rows="1"; height:300px" class="cut" id="text" width="200px" height="400px" >
+
+
+
+          </textarea><br>
+          <button  type="button" id="btn" class="btn btn-success btn-sm">
+            <i class="bi bi-file-earmark-font"></i><h7 class="fw-bold  " >UPLOAD</button>
+          </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+        <script type="text/javascript">
+        $(document).ready(function(){
+        const  str = $(".original").text();
+        const regex = /'/gm;
+        const regexx = /,/gm;
+        const regexxx=/#/gm;
+        var cut = str.replace("[", "").replace("]", "").replace(regex, "").replace(regexx , "\n").replace(regexxx , "");
+
+
+
+        $(".cut").html(cut);
+
+        });
+        </script>
+
+ 
+
+<script>
+            function download(file, text) {
+
+                //creating an invisible element
+                var element = document.createElement('a');
+                element.setAttribute('href',
+                'data:text/plain;charset=utf-8, '
+                + encodeURIComponent(text));
+                element.setAttribute('download', file);
+
+                // Above code is equivalent to
+                // <a href="path of file" download="file name">
+
+                document.body.appendChild(element);
+
+                //onClick property
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
+            // Start file download.
+            document.getElementById("btn")
+            .addEventListener("click", function() {
+                // Generate download of hello.txt
+                // file with some content
+                var text = document.getElementById("text").value;
+                var filename = "Script_B2B.txt";
+
+                download(filename, text);
+            }, false);
+         </script>
+
+
+
+</body>
+</html>

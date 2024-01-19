@@ -1,0 +1,303 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+ 
+<!-- end demo code -->
+ 
+ 
+<style>
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+ border-color: #00e7eb;
+}
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+margin: 1.5rem 0;
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+</style>
+<body style="background-color: #eef3f2">
+
+
+
+        
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-8">
+        <div class="card">
+          <h1>        <a  onclick="exportTableToExcel('example1','DIMMENSIONNEMENT')" class="link-success">
+               <img src="{% static '/images/excel.png' %}" alt="My image" width="30" > </a></h1>
+
+     <table id="example1" class="table table-sm table-dark table-bordered" style="width:100%">
+  <thead>
+
+
+
+    <tr>
+      <th scope="col">INTERCO</th>
+      <th scope="col">INTERFACE</th>
+       <th scope="col">CAPACITE</th>
+      <th scope="col">PERC</th>
+      <th scope="col">TYPE</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in bhs %}
+    <tr>
+      <td>{{item.liaison}}</td>
+      <td>{{item.interface}}</td>
+      <td>{{item.capa}}</td>
+      <td>{{item.percent}}</td>
+        <td>{{item.typeBH}}</td>
+
+   {% endfor %}
+
+
+  </tbody>
+</table>
+    </div>
+
+  </div>
+       <div class="col-4">
+          <div class="card ">
+     <canvas id="myChart" width="100" height="65vh"></canvas>
+    </div>
+
+
+           <div class="card ">
+     <canvas id="myChart1" width="100" height="65vh">
+
+</canvas>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+
+ </body>
+
+
+
+
+
+
+<script>
+
+
+var ctx = document.getElementById('myChart1').getContext('2d');
+
+var myChart1 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels1|safe }},
+        datasets: [{
+            label: '',
+
+            data: {{ data1|safe }},
+
+             order:2,
+
+            backgroundColor: [
+                 'rgba(243,85,118,0.91)',
+                'rgb(114,188,238)',
+                'rgb(248,203,88)',
+                'rgb(211,224,222)',
+                'rgb(154,200,245)',
+                'rgb(105,234,193)'
+            ],
+
+
+        },
+
+{
+            type: 'line',
+            label: '>90',
+            data: {{target|safe}},
+    pointRadius: 2,
+     fill: false,
+    backgroundColor: 'rgba(255, 244, 0)',
+    borderColor:'rgb( 255, 0, 11 )',
+  hoverBackgroundColor:'rgb(32,213,116)',
+    tension: 1,
+
+        },
+
+
+]
+    },
+    options: {
+         elements: {
+      bar: {
+        borderWidth:  0.5,
+       },
+      line: {
+        borderWidth:2,
+      }
+    },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+           plugins: {
+
+      title: {
+        display: true,
+        text: 'SUIVI DIMMENSIONNEMENT BH'
+      }
+    }
+    },
+});
+
+
+
+</script>
+
+
+
+
+
+
+<script>
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["BH_OOO","BH_TT"],
+        datasets: [{
+            label: '',
+
+            data: [{{sumOOO}},{{sumTT}}],
+            backgroundColor: [
+                 'rgba(243,85,118,0.91)',
+                'rgb(114,188,238)',
+                'rgb(248,203,88)',
+                'rgb(211,224,222)',
+                'rgb(154,200,245)',
+                'rgb(105,234,193)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+         elements: {
+      bar: {
+        borderWidth:  0.5,
+       },
+      line: {
+        borderWidth:1,
+      }
+    },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+           plugins: {
+
+      title: {
+        display: true,
+        text: 'BW UTULIZATION SHARING'
+      }
+    }
+    },
+});
+
+
+
+</script>
+
+
+    {% block content %}
+
+
+    {% endblock %}
+
+
+
+<script>
+
+
+$(document).ready(function() {
+$('#example1').DataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+});
+} );
+ function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+
+    // Create download link element
+    downloadLink = document.createElement("a");
+
+    document.body.appendChild(downloadLink);
+
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+        // Setting the file name
+        downloadLink.download = filename;
+
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
+
+
+</script>
+
+</body>
+
+</head>
+
+</html>

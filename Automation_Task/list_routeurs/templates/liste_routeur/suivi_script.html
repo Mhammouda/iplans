@@ -1,0 +1,170 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+   
+
+ {% if messages %}
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+<!-- end demo code -->
+ <style>
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+
+}
+
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+      margin: 1.5rem 0;
+
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+</style>
+<body style="background-color: #eef3f2">
+    <div class="container"> <div class="card ">
+  <div class="row">
+    <div class="col-8">
+
+
+    <table class="table table-hover    table-dark">
+
+    <tr  class="table-dark">
+        <th scope="col">Script_DEMANDE</th>
+        <td>{{ script_DEMANDE }}</td></tr>
+    <tr>
+
+        <th scope="col" >Script_PLANNED</th>
+         <td>{{ script_PLANNED }} </td>
+    </tr>
+    <tr>
+       <th scope="col">Script_SUCCESS</th>
+             <td>{{ script_SUCCESS }} </td>
+    </tr>
+      <tr>
+            <th scope="col">Script_REJECTED</th>
+      <td>{{ script_REJECTED }} </td>
+
+      </tr>
+
+
+
+</table>
+
+</div>
+  <div class="col-4">
+
+
+
+
+
+                                        <canvas id="myChart3" width="100" height="30vh">
+
+                                        </canvas>
+
+
+
+
+
+
+
+                                    </div>
+
+                            </div>
+                        </div>
+</div>
+  </div>
+</div>
+
+
+
+
+
+                        <!-- Pending Requests Card Example -->
+
+
+
+
+
+  <script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{script_REJECTED}},{{script_SUCCESS}},{{script_PLANNED}},{{script_DEMANDE}}],
+          backgroundColor: [
+               'rgb(  243, 131, 13  )',
+               'rgb( 128, 237, 174 )',
+
+
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+          ],
+          label: 'Population'
+        }],
+        labels: ["SCRIPT_REJECTED","SCRIPT_SUCCESS","SCRIPT_PLANNED","SCRIPT_DEMANDE"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+
+
+
+
+    window.onload = function() {
+      var ctx = document.getElementById('myChart3').getContext('2d');
+
+      window.myPie = new Chart(ctx, config);
+
+    };
+  </script>
+
+
+
+
+

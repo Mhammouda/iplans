@@ -1,0 +1,15 @@
+ {% include 'liste_routeur/head.html' %}
+ 
+
+<br>
+<div class="container mb-3  ">
+<div class="col">
+    <h1> <span class="badge badge-warning">ADD NEW USER</span></h1>
+     
+ 
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,318 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+   
+  
+{% for message in messages %}
+  
+ <div class="alert {{ message.tags }} alert" role="alert" >
+  <span class="alert-icon"><span class="visually-hidden">Success</span></span>
+  <p> {{ message }}</p>
+</div>
+{% endfor %}
+<!-- end demo code -->
+ 
+
+
+                   
+
+
+              
+       
+
+    {% block content %}
+
+
+    {% endblock %}
+
+
+ <style>
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+ border-color: #00e7eb;
+}
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+margin: 1.5rem 0;
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+</style>
+<body style="background-color: #eef3f2">
+
+
+
+
+<div class="container">
+  <div class="row"><div class="col-8">
+        <div class="card">
+<h1>
+          <a  onclick="exportTableToExcel('example','DIMMENSIONNEMENT')" class="link-success">
+
+ <img src="{% static '/images/excel.png' %}" alt="My image" width="30" >
+              </a>
+</h1>
+   <table id="example" class="table table-dark table-sm table-bordered" style="width:100%">
+  <thead>
+
+
+
+    <tr>
+      <th scope="col">Nom DEVICE</th>
+      <th scope="col">LOo DEVICE</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">cpu-usage</th>
+      <th scope="col">memory-usage</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in NE40 %}
+    <tr>
+      <td>{{item.name}}</td>
+      <td>{{item.Loopback}}</td>
+      <td>{{item.category}}</td>
+  <td>{{item.percentcpu}}</td>
+ <td>{{item.percentmemory}}</td>
+
+   {% endfor %}
+
+
+  </tbody>
+</table>
+ </div>
+
+  </div>
+    <div class="col-4">
+          <div class="card ">
+     <canvas id="myChart1" width="100" height="65vh"></canvas>
+
+    </div>
+   <div class="card ">
+     <canvas id="myChart" width="100" height="65vh">
+
+</canvas>
+    </div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<script>
+ 
+
+var ctx = document.getElementById('myChart1').getContext('2d');
+
+var myChart1 = new Chart(ctx, {
+
+    data: {
+        labels: {{ labels1|safe }},
+        datasets: [{
+           label: 'Lien congestioné',
+              type: 'bar',
+            data: {{ data1|safe }},
+            order:2,
+
+                       backgroundColor: [
+                 'rgba(243,85,118,0.91)',
+                'rgb(114,188,238)',
+                'rgb(248,203,88)',
+                'rgb(211,224,222)',
+                'rgb(154,200,245)',
+                'rgb(105,234,193)'
+            ],
+
+        },
+{
+            type: 'line',
+            label: '>90',
+            data: {{target1|safe}},
+     fill: false,
+          pointRadius: 2,
+    backgroundColor: 'rgba(255, 244, 0)',
+    borderColor:'rgb( 255, 0, 11 )',
+  hoverBackgroundColor:'rgb(32,213,116)',
+    tension: 1,
+
+        },
+]
+    },
+    options: {
+         elements: {
+      bar: {
+        borderWidth:1,
+      },
+      line: {
+        borderWidth:3,
+      }
+    },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+
+    plugins: {
+
+      title: {
+        display: true,
+        text: 'ALERTE CPU-USAGE'
+      }
+    }
+    },
+});
+
+ 
+
+</script>
+
+
+
+
+ 
+
+
+<script>
+ 
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var myChart = new Chart(ctx, {
+
+    data: {
+        labels: {{ labels2|safe }},
+        datasets: [{
+            label: 'Lien congestioné',
+             type: 'bar',
+            data: {{ data2|safe }},
+            order:2,
+
+                       backgroundColor: [
+                 'rgba(243,85,118,0.91)',
+                'rgb(114,188,238)',
+                'rgb(248,203,88)',
+                'rgb(211,224,222)',
+                'rgb(154,200,245)',
+                'rgb(105,234,193)'
+            ],
+
+        },
+{
+            type: 'line',
+            label: '>90',
+            data: {{target2|safe}},
+     pointRadius: 2,
+     fill: false,
+    backgroundColor: 'rgba(255, 244, 0)',
+    borderColor:'rgb( 255, 0, 11 )',
+  hoverBackgroundColor:'rgb(32,213,116)',
+    tension: 1,
+
+        },
+]
+    },
+    options: {
+         elements: {
+      bar: {
+        borderWidth:1,
+      },
+      line: {
+        borderWidth:3,
+      }
+    },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+
+  plugins: {
+
+      title: {
+        display: true,
+       text: 'ALERTE MEMORY-USAGE'
+      }
+    }
+    },
+});
+
+ 
+
+</script>
+
+ 
+<script>
+$(document).ready(function() {
+$('#example').DataTable({
+
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+});
+} );
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+</script>
+ 
+</body>
+
+</html>

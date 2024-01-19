@@ -1,0 +1,440 @@
+ {% include 'liste_routeur/head.html' %}
+
+  {% load static  %}
+ {% if messages %}
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+<style>
+
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+
+}
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+  margin: 1.5rem 0;
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+}
+
+</style>
+<body style="background-color: #eef3f2">
+<div class="container">
+<div class="card ">
+        <div class="col" id="listscript">
+    <h1> <span class="badge badge-warning">SCRIPT UPDATE</span> <a  onclick="exportTableToExcel('example','UPDATE SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+    <table id="example" class="table     table-dark table-bordered"  >
+        <thead>
+            <tr >
+<td>id</td>
+      <td > SR</td>
+  <td> INTERFACE</td>
+   
+  <td> DEBIT</td>
+  <td> DATE</td>
+ <td>Script</td>
+  <td>WO SWAN</td>
+  <td>ETAT WO</td>
+
+   <td>Date changement SUPPORT</td>
+                 <td>comment</td>
+  <td>ACTION</td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in updatebyuser %}
+  <tr >
+
+        <td> {{item.id}}</td>
+
+        <td> {{item.routeur}}</td>
+  <td> {{item.interface}}</td>
+   
+  <td class="editable"> {{item.debit}}</td>
+  <td> {{item.date}}</td>
+
+      <td> <a href="{% url 'generateupscript' item.id %}" class="link-success" ><img src="{% static '/images/icons8-joindre-un-cv-48.png' %}" alt="My image" width="30"></a></td>
+ <td>{{item.swan}}</td>
+
+<td>{% if item.etat == "DEMANDE" %}
+    <span class="badge rounded-pill bg-info"><small style="font-size:xx-small  " >{{item.etat}}</small></span>
+    {% elif item.etat == "PLANNED" %}
+     <span class="badge rounded-pill bg-light"><small style="font-size:xx-small  ">{{item.etat}}</small></span>
+    {% elif item.etat == "SUCCESS" %}
+
+     <span class="badge rounded-pill bg-success"><small style="font-size:xx-small   " >{{item.etat}}</small></span>
+    {% elif item.etat == "REJECTED" %}
+     <span class="badge rounded-pill bg-warning"><small style="font-size:xx-small  " >{{item.etat}}</small></span>
+    {% else %}
+     <span class="badge rounded-pill bg-danger"><small style="font-size:xx-small   " >{{item.etat}}</small></span>
+{% endif %}
+</td>
+
+<td>{{item.date_changement}}</td>
+      <td>{{item.comment}}</td>
+      <td>
+           {% if item.etat == "DEMANDE" or item.etat == "REJECTED"    %}
+ <a href="{% url 'delete-script' item.id %}" class="link-success" ><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a></td>
+{% endif %}
+
+      </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+        </div>
+
+
+ </div>
+    <div class="card ">
+       <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT NEW SERVICE </span> <a  onclick="exportTableToExcel('example1','NEW SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+    <table id="example1" class="table   table-sm table-dark table-bordered"  >
+        <thead>
+            <tr>
+                <td>ID</td>
+        <td> NOM CLIENT</td>
+  <td> SR</td>
+  <td> SWITCH</td>
+  <td> INTERFACE</td>
+  <td> VLAN</td>
+  <td> DEBIT</td>
+  <td>INTERCO PRIVEE /30</td>
+  <td>@IP PUBLIC /32</td>
+  <td>@IP PUBLIC /31</td>
+  <td>@IP PUBLIC /28</td>
+  <td>@IP PUBLIC /29</td>
+  <td>VRF</td>
+  <td>SUPPORT TRANS</td>
+  <td>DATE</td> 
+     <td>Script</td>
+  <td>WO SWAN</td>
+  <td>ETAT WO</td>
+
+   <td>Date changement SUPPORT</td>
+                <td>Comment</td>
+  <td>ACTION DELETE_CHANGE</td>
+
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in servicebyuser %}
+  <tr >
+
+  <td> {{item.id}}</td>
+      <td> {{item.nomClient}}</td>
+<td>{{item.routeur}} </td>
+<td>{{item.switch}} </td>
+<td> {{item.interface}} </td>
+<td> {{item.vlan}}</td>
+<td> {{item.debit}} </td>
+<td>{{item.ipadress}}</td>
+<td>{{item.ipadresspublic}}</td>
+<td>{{item.ipadresspublic31}}</td>
+      <td>{{item.ipadresspublic28}}</td>
+      <td>{{item.ipadresspublic29}}</td>
+<td>{{item.VRF}} </td>
+<td>{{item.trans}} </td>
+<td>{{item.date}}</td>
+
+      <td>
+
+          <a href="{% url 'generatenewscript' item.id %}" class="link-success" ><img src="{% static '/images/icons8-joindre-un-cv-48.png' %}" alt="My image"></a>
+
+      </td>
+ <td>{{item.swan}}</td>
+<td>{% if item.etat == "DEMANDE" %}
+    <span class="badge rounded-pill bg-info"><small style="font-size:xx-small  " >{{item.etat}}</small></span>
+    {% elif item.etat == "PLANNED" %}
+     <span class="badge rounded-pill bg-light"><small style="font-size:xx-small  ">{{item.etat}}</small></span>
+    {% elif item.etat == "SUCCESS" %}
+
+     <span class="badge rounded-pill bg-success"><small style="font-size:xx-small   " >{{item.etat}}</small></span>
+    {% elif item.etat == "REJECTED" %}
+     <span class="badge rounded-pill bg-warning"><small style="font-size:xx-small  " >{{item.etat}}</small></span>
+    {% else %}
+     <span class="badge rounded-pill bg-danger"><small style="font-size:xx-small   " >{{item.etat}}</small></span>
+{% endif %}
+</td>
+
+<td>{{item.date_changement}}</td>
+      <td>{{item.comment}}</td>
+<td>
+    {% if item.etat == "DEMANDE" or item.etat == "REJECTED"    %}
+    <a  href="{% url 'delete_service' item.id %}" class="link-success" ><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+
+     {% endif %}
+    {% if item.ipadresspublic != None and item.etat == "SUCCESS"    %}
+    <a  href="{% url 'change_architect_service' item.id %}" class="link-success" ><img src="{% static '/images/modify.png' %}" alt="My image"></a>
+     {% elif item.ipadresspublic31 != None and item.ipadress != None and item.etat == "SUCCESS"%}
+        <a  href="{% url 'sans_nat_avec_CPE' item.id %}" class="link-success" ><img src="{% static '/images/modify.png' %}" alt="My image"></a>
+   {% elif item.ipadresspublic31 != None and item.ipadress == None and item.etat == "SUCCESS" %}
+        <a  href="{% url 'sans_nat_sans_CPE' item.id %}" class="link-success" ><img src="{% static '/images/modify.png' %}" alt="My image"></a>
+
+
+ {% endif %}
+</td>
+
+      </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+ 
+ 
+  </div>
+ </div>
+
+
+ <div class="card ">
+  
+         <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT MANUEL NEW SERVICE</span><a  onclick="exportTableToExcel('example2','DELETE SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+
+    <table id="example10" class="table   table-sm table-dark table-bordered">
+        <thead>
+            <tr>
+                <td>ID</td>
+<td> nomClient</td>
+  <td> routeur</td>
+  <td> interface</td>
+  <td> vlan</td>
+  <td> debit</td>
+  <td>ipGW</td>
+  <td>VRF</td>
+  <td>trans</td>
+  <td>Date</td>
+
+  <td>Script</td>
+                <td>Action</td>
+            </tr>
+
+        </thead>
+        <tbody>
+         
+             
+  {% for item in servicemanuel %}
+
+<tr class="clickable-row">
+        <td> {{item.id}}</td>
+      <td> {{item.nomClient}}</td>
+<td>{{item.routeur}} </td>
+<td> {{item.interface}} </td>
+<td> {{item.vlan}}</td>
+<td> {{item.debit}} </td>
+<td>{{item.ipGW}}</td>
+<td>{{item.VRF}} </td>
+<td>{{item.trans}} </td>
+<td>{{item.date}}</td>
+  <td> <a href="{% url 'generatescriptmanuel' item.id %}" class="link-success" ><img src="{% static '/images/icons8-joindre-un-cv-48.png' %}" alt="My image"></a>
+  </td>
+ <td>
+ <a    href="{% url 'delete_service_manuel' item.id %}" class="link-success" ><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a></td>
+      </tr>
+    {% endfor %}
+    </table>
+
+     
+   </div>
+ </div>
+    <div class="card ">
+         <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT DELETE SERVICE</span> <a  onclick="exportTableToExcel('example2','DELETE SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+    <table id="example2" class="table   table-sm table-dark table-bordered">
+        <thead>
+				<tr   >
+                    <td> ID</td>
+		<td> SR</td>
+	<td> INTERFACE</td>
+	 
+	<td> DATE</td>
+
+      <td>Script</td>
+                <td>Action</td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in deletebyuser %}
+
+
+     <tr>
+<td> {{item.id}}</td>
+      <td> {{item.routeur}}</td>
+<td> {{item.interface}}</td>
+ 
+ 
+<td> {{item.date}}</td>
+
+<td> <a href="{% url 'generatedelscript' item.id %}" class="link-success" ><img src="{% static '/images/icons8-joindre-un-cv-48.png' %}" alt="My image"></a>
+
+</td>
+      <td>
+ <a    href="{% url 'delete_service_resiliation' item.id %}" class="link-success" ><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a></td>
+      </tr>
+    {% endfor %}
+    </table>
+     
+     </div>
+ </div>
+    <div class="card ">
+    <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT  SERVICE MPLS</span>  <a  onclick="exportTableToExcel('example3','MPLS SERVICE')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image" width="30"></a></h1>
+     
+    <table id="example3" class="table   table-sm table-dark table-bordered">
+        <thead>
+				<tr    >
+                      <td> ID</td>
+		      <td> SR</td>
+              <td> SWITCH</td>
+<td> INTERFACE</td>
+<td> VLAN</td>
+ 
+
+<td> TRANS</td>
+<td> PEER</td>
+<td> DATE</td>
+
+<td>Script</td>
+                    <td>Action</td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in L2VCbyuser %}
+
+
+     <tr >
+ <td> {{item.id}}</td>
+      <td> {{item.routeur}}</td>
+      <td> {{item.switch}}</td>
+<td> {{item.interface}}</td>
+<td> {{item.vlan}}</td>
+ 
+ <td> {{item.trans}}</td>
+ <td> {{item.dist}}</td>
+ 
+<td> {{item.date}}</td>
+ 
+  <td> <a href="{% url 'generatescript' item.id %}" class="link-success " ><img src="{% static '/images/icons8-joindre-un-cv-48.png' %}" alt="My image"></a>
+  </td>
+      <td>
+ <a    href="{% url 'delete_service_MPLS' item.id %}" class="link-success" ><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a></td>
+      </tr>
+    {% endfor %}
+    </table>
+
+
+   </div>
+ </div>
+
+
+
+
+</div>
+
+
+
+
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+$(document).ready(function() {
+$('#example1').DataTable({
+      "scrollX": true
+});
+} );
+
+$(document).ready(function() {
+$('#example2').DataTable(
+
+);
+} );
+
+$(document).ready(function() {
+$('#example3').DataTable();
+} );
+$(document).ready(function() {
+$('#example10').DataTable();
+} );
+
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
+</script>
+         </div></div></div>

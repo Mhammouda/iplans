@@ -1,0 +1,246 @@
+ {% include 'liste_routeur/head.html' %}
+  {% load static  %}
+ <div class="container">
+    
+        <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT UPDATE</span></h1>
+    <table id="example" class="table table-dark table-bordered" style="width:100%">
+        <thead>
+            <tr >
+
+      <td > routeur</td>
+  <td> interface</td>
+  <td> vlan</td>
+  <td> debit</td>
+  <td> Date</td>
+  <td> user</td>
+  <td> action  
+   <a href="{% url 'deletedelscriptALL' %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+  </td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in script %}
+
+
+      
+
+        <td> {{item.routeur}}</td>
+  <td> {{item.interface}}</td>
+  <td> {{item.vlan}}</td>
+  <td> {{item.debit}}</td>
+  <td> {{item.date}}</td>
+  <td> {{item.user}}</td>
+  <td><a href="{% url 'deletedelscript' item.id %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a></td>
+      </tr>
+    {% endfor %}
+    </table>
+ 
+
+<br>
+ 
+         <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT NEW SERVICE</span></h1>
+    <table id="example1" class="table table-dark table-bordered" style="width:100%">
+        <thead>
+            <tr   >
+        <td> nomClient</td>
+  <td> routeur</td>
+  <td> switch</td>
+  <td> interface</td>
+  <td> vlan</td>
+  <td> debit</td>
+  <td>ipadress</td>
+  <td>ipadresspublic</td>
+   
+   
+  <td>Date</td> 
+   
+  <td scope="col">Action
+  <a href="{% url 'deleteserviceALL' %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+  </td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in service %}
+
+
+      
+      <td> {{item.nomClient}}</td>
+<td>{{item.routeur}} </td>
+<td>{{item.switch}} </td>
+<td> {{item.interface}} </td>
+<td> {{item.vlan}}</td>
+<td> {{item.debit}} </td>
+<td>{{item.ipadress}}</td>
+<td>{{item.ipadresspublic}}</td>
+ 
+ 
+<td>{{item.date}}</td>
+  
+<td> 
+      <a href="{% url 'deleteservice' item.id %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td></tr>
+    {% endfor %}
+    </table>
+
+         <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT DELETE SERVICE</span></h1>
+    <table id="example2" class="table table-dark table-bordered" style="width:100%">
+        <thead>
+				<tr   >
+		<td> routeur</td>
+	<td> interface</td>
+	<td> vlan</td>
+	<td> date</td>
+      <td> user</td>
+      <td> action
+
+      <a href="{% url 'deletedelserviceALL' %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in delService %}
+
+
+     <tr>
+
+      <td> {{item.routeur}}</td>
+<td> {{item.interface}}</td>
+<td> {{item.vlan}}</td>
+ 
+<td> {{item.date}}</td>
+  <td> {{item.user}}</td>
+  <td> 
+      <a href="{% url 'deletedelservice' item.id %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td> 
+      </tr>
+    {% endfor %}
+    </table>
+    <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT  SERVICE MPLS</span></h1>
+     
+    <table id="example3" class="table table-dark table-bordered" style="width:100%">
+        <thead>
+				<tr    >
+		      <td> routeur</td>
+<td> interface</td>
+<td> vlan</td>
+ 
+
+<td> trans</td>
+<td> dist</td>
+<td> date</td>
+<td> user</td>
+<td> action
+<a href="{% url 'deleteL2VCALL' %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+
+</td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in l2VC %}
+
+
+     <tr >
+
+      <td> {{item.routeur}}</td>
+<td> {{item.interface}}</td>
+<td> {{item.vlan}}</td>
+ 
+ <td> {{item.trans}}</td>
+ <td> {{item.dist}}</td>
+ 
+<td> {{item.date}}</td>
+  <td> {{item.user}}</td>
+  <td> 
+      <a href="{% url 'deleteL2VC' item.id %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td>
+      </tr>
+    {% endfor %}
+    </table>
+    <table>
+    {% for item in serviceadressepublic %}
+    <tr >
+    <td>   {{item}}</td>
+    </tr >{% endfor %}
+    </table>
+</div>
+
+      <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT MANUEL NEW SERVICE</span></h1>
+    <table id="example1" class="table table-dark table-bordered" style="width:100%">
+        <thead>
+            <tr   >
+<td> nomClient</td>
+  <td> routeur</td>
+    <td> switch</td>
+  <td> interface</td>
+  <td> vlan</td>
+  <td> debit</td>
+  <td>ipGW</td>
+  <td>VRF</td>
+  <td>trans</td>
+  <td>Date</td>
+  <td>User</td>
+  <td> action
+<a href="{% url 'deletedelscriptALLMAN'   %}" class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+
+</td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in servicemanuel %}
+
+
+      
+      <td> {{item.nomClient}}</td>
+<td>{{item.routeur}} </td>
+<td>{{item.switch}} </td>
+<td> {{item.interface}} </td>
+<td> {{item.vlan}}</td>
+<td> {{item.debit}} </td>
+<td>{{item.ipGW}}</td>
+<td>{{item.VRF}} </td>
+<td>{{item.trans}} </td>
+<td>{{item.date}}</td>
+<td>{{item.user}}</td>  
+<td> 
+      <a href="{% url 'deletedelscriptMAN' item.id %}"class="link-danger"><img src="{% static '/images/icons8-delete-64.png' %}" alt="My image"></a>
+      </td>
+      </tr>
+    {% endfor %}
+    </table>
+
+      
+
+
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+$(document).ready(function() {
+$('#example1').DataTable();
+} );
+
+$(document).ready(function() {
+$('#example2').DataTable();
+} );
+
+$(document).ready(function() {
+$('#example3').DataTable();
+} );
+ 
+</script>
+

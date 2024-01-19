@@ -1,0 +1,160 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+ 
+<!-- end demo code -->
+   
+ <div class="container">
+    
+        <div class="col">
+          <h3 id="search">SUIVI DIMMENSIONNEMENT BB IP 
+          <a  onclick="exportTableToExcel('example','DIMMENSIONNEMENT')" class="link-success"><img src="{% static '/images/excel.png' %}" alt="My image"></a> 
+         </h6>
+        
+
+   <table id="example" class="table table-dark table-bordered" style="width:100%">
+  <thead>
+
+
+
+    <tr>
+      <th scope="col">liaison</th>
+      <th scope="col">CAPACITE</th>
+      <th scope="col">perc</th>
+      <th scope="col">ACTION
+      <a href="" class="link-success"><img src="{% static '/images/refresh.png' %}" alt="My image"></a></th>
+      
+      
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in dimens %}
+    <tr>
+      <td>{{item.liaison}}</td>
+      <td>{{item.capa}}</td>
+      <td>{{item.percent}}</td>
+  <td> <a href="" class="link-success"><img src="{% static '/images/refresh.png' %}" alt="My image"></a>
+      <a href="" class="link-danger"><img src="{% static '/images/delete.png' %}" alt="My image"></a>
+</tr>
+
+   {% endfor %}
+ 
+
+  </tbody>
+</table>
+  
+  
+                 </div>
+             
+              
+          
+ 
+        <div class="col">
+          <h3  >ALERTE LIEN CONGESTIONNEE 
+         </h6>    
+         
+       
+<canvas id="myChart" width="100" height="30vh">
+
+</canvas>
+
+
+
+
+ 
+
+
+<script>
+ 
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels|safe }},
+        datasets: [{
+            label: '',
+             
+            data: {{ data|safe }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+ 
+
+</script>
+
+ 
+
+    {% block content %}
+
+
+    {% endblock %}
+
+ 
+ 
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+ function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
+ 
+</script>
+ 
+</body>
+
+</html>

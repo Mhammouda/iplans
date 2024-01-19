@@ -1,0 +1,34 @@
+ {% include 'liste_routeur/head.html' %}
+ 
+
+<br>
+<div class="container mb-3  ">
+
+<div class="row ">
+
+  <div class="col">
+   <div class="card" >
+<div class="card-header pb-10">
+  <div class="alert alert-success" role="alert">
+<h4>Config PORT
+</div>
+ 
+<table class="table table-dark table-bordered" style="width:100%" id="myTable">
+
+
+  {% for item in result %}
+    <tr>
+
+      <td> {{item}}</td>
+
+    </tr>
+  {% endfor %}
+
+
+
+</table>
+
+ 
+
+
+</div>

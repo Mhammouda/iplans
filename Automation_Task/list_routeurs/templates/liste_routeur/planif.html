@@ -1,0 +1,55 @@
+  
+ {% include 'liste_routeur/head.html' %}
+     
+ 
+
+{% for message in messages %}
+  
+ <div class="alert {{ message.tags }} alert" role="alert" >
+  <span class="alert-icon"><span class="visually-hidden">Success</span></span>
+  <p> {{ message }}</p>
+</div>
+{% endfor %}
+ 
+   <br>
+ 
+     <div class="container">
+    
+        <div class="col">
+        <h2> <span class="badge badge-warning">PLANIFICATION ACTION</span></h2>
+            <form method="POST" class="mb-3">
+            {% csrf_token %}
+                
+<table class="table table-dark table-bordered" style="width:100%">
+<tr>
+    <td>ROUTEUR: </td>
+     <td>            {{form.routeur}}  </td> 
+            
+       </td>
+       
+       <td>
+       PLANIFICATION ACTION:
+       
+       </td>    
+       <td>
+        <input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
+       </td>
+     </tr>     
+</table>
+
+      
+        <button type="submit" class="btn btn-primary btn-sm" name="btn" ><h7 class="fw-bold  " >PLANIFIER <i class="bi bi-printer"></i></button>
+      
+    </form>
+ 
+ 
+ <script type="text/javascript">
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+</script>   
+ 
+ 
+
+
+
+</body>
+</html>

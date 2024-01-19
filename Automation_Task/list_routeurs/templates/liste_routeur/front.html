@@ -1,0 +1,112 @@
+  
+ {% include 'liste_routeur/head.html' %}
+     
+ 
+
+{% for message in messages %}
+  
+ <div class="alert {{ message.tags }} alert" role="alert" >
+  <span class="alert-icon"><span class="visually-hidden">Success</span></span>
+  <p> {{ message }}</p>
+</div>
+{% endfor %}
+ 
+   <br>
+ 
+     <div class="container">
+    
+        <div class="col">
+        <h2> <span class="badge badge-warning">UPGRADE DEBIT</span></h2>
+            <form method="POST" class="mb-3">
+            {% csrf_token %}
+                
+<table class="table table-dark table-bordered" style="width:100%">
+<tr>
+    <td>Client: </td>
+     <td>            {{form.nom_client}}</td></tr>
+            <tr>
+             <td>Select Client: </td>
+                  <td>  <select id="monselect" name="monselect" value="">
+                    {% for List_client in List_client %} 
+                     <option >   {{List_client}}  </option>
+                     {% endfor %}
+                                </select></td></tr>
+            
+                    
+                    
+</table>
+
+      
+ 
+       <button type="submit" class="btn btn-primary btn-sm" name="btn1"><h7 class="fw-bold  " >Rechercher CLIENT <i class="bi bi-printer"></i></button>
+    </form>
+ 
+
+
+        <script type="text/javascript">
+        $(document).ready(function(){
+        const  str = $(".original").text();
+        const regex = /'/gm;
+        const regexx = /,/gm;
+        const regexxx=/#/gm;
+        var cut = str.replace("[", "").replace("]", "").replace(regex, "").replace(regexx , "\n").replace(regexxx , "");
+
+
+
+        $(".cut").html(cut);
+
+        });
+
+         
+        </script>
+      
+         
+       <h2> <span class="badge badge-warning">SHOW CONFIG</span></h2>
+        <p class="original" style="width:554px; height:100px;" rows="10" cols="20" name="conf" form="conf" id="conf">{{result}}</p>
+
+         
+
+        
+         
+       <h2> <span class="badge badge-warning">UP SCRIPT</span></h2>
+        <textarea style="width:554px; height:100px" class="cut" id="text" width="200px" height="400px"></textarea><br>
+        <button  type="button" id="btn" class="btn btn-success btn-sm">
+          <i class="bi bi-file-earmark-font"></i>Upload</button>
+
+<script>
+            function download(file, text) {
+
+                //creating an invisible element
+                var element = document.createElement('a');
+                element.setAttribute('href',
+                'data:text/plain;charset=utf-8, '
+                + encodeURIComponent(text));
+                element.setAttribute('download', file);
+
+                // Above code is equivalent to
+                // <a href="path of file" download="file name">
+
+                document.body.appendChild(element);
+
+                //onClick property
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
+            // Start file download.
+            document.getElementById("btn")
+            .addEventListener("click", function() {
+                // Generate download of hello.txt
+                // file with some content
+                var text = document.getElementById("text").value;
+                var filename = "Update_Debit_B2B.txt";
+
+                download(filename, text);
+            }, false);
+         </script>
+
+
+
+</body>
+</html>

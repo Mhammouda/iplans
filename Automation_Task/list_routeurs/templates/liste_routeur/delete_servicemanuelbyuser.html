@@ -1,0 +1,27 @@
+  
+ {% include 'liste_routeur/head.html' %}
+ 
+
+
+
+<div class="card    border-danger mb-3" style="width: 18rem;" >
+  <div class="card-body">
+ <div class="row g-3 needs-validation">
+ <h3>Are you sure !!!! </h3>
+<form action="{%  url 'delete_service_manuel' servicemanuel.id %}" method="POST">
+   {% csrf_token %} 
+   
+   <a href="{% url 'genratescript' %}" class="btn btn-success">Cancel</a>
+  <button type="submit" class="btn btn-danger" name="btn">Yes</button>
+ 
+  
+</form>
+</div>
+  </div>
+</div>
+ 
+ 
+
+
+ </body>
+ </html>

@@ -1,0 +1,79 @@
+ 
+ {% include 'liste_routeur/head.html' %}
+   
+{% for message in messages %}
+<div class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert" role="alert" >
+    
+   <h5> {{ message }}</h5>
+  </div>
+</div>
+{% endfor %}
+ 
+ <div class="container">
+        
+         
+        <div class="col">
+    <h1> <span class="badge badge-warning">CONNECT DEVICE</span></h1>
+
+
+
+    <form method="POST" class="mb-3">
+       {% csrf_token %}
+       <table class="table table-dark table-bordered" style="width:100%">
+              {{form}}
+       </table>
+        <button type="submit" class="btn btn-primary btn-sm" ><i class="bi bi-hdd-network  "></i> <h7 class="fw-bold  " >Connect </button>
+        <a href="{% url 'home'  %}" class="btn btn-success btn-sm" >BACK HOME</a> 
+    </form>
+     
+     <script>
+
+
+     </script>
+        <div class="col">
+    
+    <h1> <span class="badge badge-warning">RESULT</span></h1>
+
+   
+          
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+<table class="table table-dark table-bordered" style="width:100%" id="myTable">
+
+
+   {% for item in result %}
+    <tr>
+
+      <td>  {{item}}</td>
+
+    </tr>
+  {% endfor %}
+</table>
+
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+
+</body>
+</html>

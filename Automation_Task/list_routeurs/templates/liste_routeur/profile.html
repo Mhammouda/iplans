@@ -1,0 +1,316 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+   
+
+ {% if messages %}
+
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+ 
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+<!-- end demo code -->
+<style>
+.container {
+  padding: 2px 16px;
+}
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+
+}
+.card {
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+
+.card_3 {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color: white;
+   margin: 1rem 0;
+}
+.card_2 {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color: white;
+   margin: 1rem 0;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+body{
+ margin-top: 0;
+    background-color:    #eef3f2  ;
+}
+
+
+
+</style>
+<body>
+  <div class="container">
+<div class="container-fluid">
+<div class="card_1">
+    <div class="card_2">
+
+        <h5 style="color: grey">    REPORTING high level
+            <i class="fa-solid fa-chart-simple fa-xl" style="color:  #7e7a79 "></i></h5>
+                    <div class="row row-cols-1 row-cols-md-5 g-4">
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col">
+                            <div class="card bg-primary border-secondary mb-3" style="max-width: 18rem;">
+                              <div class="card-header"> INTERNET </div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+
+                                                            <h5 class="card-title">     NOMBRE de SERVICE</h5>
+                                <p class="card-text"><span class="badge bg-secondary">{{final_somme_general_nbr_service_Internet}}  </span> </p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Annual) Card Example -->
+                        <div class="col ">
+                                          <div class="card bg-success border-secondary mb-3" style="max-width: 18rem;">
+  <div class="card-header">VOIP</div>
+  <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+
+                                                            <h5 class="card-title">       NOMBRE de SERVICE</h5>
+                                <p class="card-text"><span class="badge bg-secondary">{{final_somme_general_nbr_service_VOIP}} </span> </p>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tasks Card Example -->
+                        <div class="col">
+                                             <div class="card bg-warning border-secondary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">L2VC</div>
+                        <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+
+                                                            <h5 class="card-title">   NOMBRE de SERVICE</h5>
+                                <p class="card-text"><span class="badge bg-secondary"> {{final_somme_general_nbr_service_L2vc}} </span> </p>
+
+                                          </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                            </div>
+                        </div>
+                         <div class="col">
+                            <div class="card bg-light border-secondary mb-3" style="max-width: 18rem;max-height: 10rem">
+                              <div class="card-header">BUSINESS-CLIENT-VSI</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+
+                                                            <h5 class="card-title">   NOMBRE DE SERVICE
+                                                                                            <p class="card-text"><span class="badge bg-secondary">{{final_somme_general_nbr_service_BUSINESS_CLIENT_VSI}}  </span> </p>
+</h5>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-info border-secondary mb-3" style="max-width: 18rem;">
+                              <div class="card-header">BUSINESS-VSI</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+
+                                                            <h5 class="card-title">     NOMBRE DE SERVICE</h5>
+                                <p class="card-text"><span class="badge bg-secondary">{{final_somme_general_nbr_service_BUSINESS_VSI}} </span> </p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        </div>
+
+      </div>
+                  <!-- Pending Requests Card Example -->
+<div class="card_2">
+
+          <h5 id="search" style="color: grey"> NE40 <span class="badge bg-danger">
+              {{nbrN40}}</span>
+            <a href="{% url 'devicetopologie'   %}"  class="btn btn-info btn-sm">TOPOLOGIE</a>
+          <i class="fa-solid fa-diagram-project fa-xl" style="color: #7e7a79"></i>
+          </h5>
+        
+
+   <table id="example" class="table table-dark table-hover" style="width:100%">
+  <thead>
+
+
+
+    <tr>
+      <th scope="col">Nom DEVICE</th>
+      <th scope="col">LOo DEVICE</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">details</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in NE40 %}
+    <tr>
+      <td>{{item.name}}</td>
+      <td>{{item.Loopback}}</td>
+      <td>{{item.category}}</td>
+<td><a href="{% url 'infoRouteur' item.id %}" id="submitButton" class="btn bg-warning btn-sm " >Neignbor</a>
+
+
+ <a href="{% url 'infoportdown' item.id %}" class="btn btn-success btn-sm " >PORT_DOWN</a>
+<a href="{% url 'infoportup' item.id %}" class="btn btn-danger btn-sm">PORT_UP</a>
+<a href="{% url 'B2B' item.id %}" class="btn btn-warning btn-sm">B2B</a>
+ <a href="{% url 'configt' item.id  %}"class="btn   bg-info btn-sm">  CMD</a>
+ <a href="{% url 'MX'  item.id  %}"class="btn   bg-secondary  btn-sm">   TRAFIC </a>
+
+</td>
+
+   {% endfor %}
+ 
+
+  </tbody>
+</table>
+
+</div>
+
+
+<div class="card_2">
+
+
+           <h5 class="fw-bold  font-monospace  " style="color: grey">
+              SWITCH <span class="badge bg-danger">  {{nbrsw}}
+
+           </span> <i class="fa-solid fa-bars-progress fa-xl" style="color: #7e7a79"></i></h5>
+
+
+
+     <table id="example2" class="table table-dark  table-bordered" style="width:100%">
+  <thead>
+    <tr>
+
+      <th scope="col">namedevice</th>
+
+      <th scope="col">loopswitch</th>
+      <th scope="col">interfaceswrt</th>
+<th scope="col">routeur</th>
+<th scope="col">interfacertsw</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in switch %}
+    <tr>
+
+      <td>{{item.namedevice}}</td>
+
+
+      <td>{{item.loopswitch}}</td>
+      <td>{{item.interfaceswrt}}</td>
+      <td>{{item.routeur}}</td>
+        <td>{{item.interfacertsw}}</td>
+
+
+    </tr>
+
+    {% endfor %}
+
+
+  </tbody>
+</table>
+
+
+</div>
+ 
+
+
+
+
+</div>
+
+</div>
+
+    {% block content %}
+
+
+    {% endblock %}
+
+
+ 
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+$(document).ready(function() {
+$('#example2').DataTable();
+} );
+</script>
+
+
+</body>
+</body>
+</html>

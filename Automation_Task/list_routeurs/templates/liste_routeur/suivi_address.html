@@ -1,0 +1,360 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+   
+
+ {% if messages %}
+
+
+  <script>
+ {% for message in messages %}
+
+ $(document).ready(function() {
+ new PNotify({
+ title: "{{ message.tags }}",
+ text: "{{ message }}.",
+ addclass:'alert  {{ message.tags }}  alert',
+
+
+});
+});
+ {% endfor %}
+</script>
+ {% endif %}
+<!-- end demo code -->
+<style>
+.container {
+  padding: 2px 16px;
+}
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+
+}
+.card {
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+
+.card_1 {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+   margin: 1rem 0;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+
+</style>
+<body style="background-color: #eef3f2;">
+  <div class="container">
+<div class="container-fluid">
+
+
+<div class="card_1">
+
+
+ <div class="row row-cols-1 row-cols-md-5 g-4">
+
+                        <div class="col">
+                            <div class="card" style="max-width: 18rem;">
+                              <div class="card-header">@IP PUBLIC /32</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+                                            <canvas id="myChart1" width="100" height="30vh">
+
+                                            </canvas>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Annual) Card Example -->
+                        <div class="col">
+                                          <div class="card"  >
+  <div class="card-header">@IP PUBLIC /31</div>
+  <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+
+                                            <canvas id="myChart2" width="100" height="30vh">
+
+                                            </canvas>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tasks Card Example -->
+                        <div class="col">
+                                             <div class="card  "  >
+                    <div class="card-header ">@IP PRIVEE /30</div>
+                        <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                        <canvas id="myChart3" width="100" height="30vh">
+
+                                        </canvas>
+
+                                          </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+                            </div>
+                        </div>
+                         <div class="col">
+                            <div class="card " style="max-width: 18rem;">
+                              <div class="card-header">@IP PUBLIC /28</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+                                            <canvas id="myChart4" width="100" height="30vh">
+
+                                            </canvas>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="max-width: 18rem;">
+                              <div class="card-header">@IP PUBLIC /29</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+
+    <canvas id="myChart5"  width="100" height="30vh"></canvas>
+  </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- Pending Requests Card Example -->
+
+                    </div>
+ <table class="table table-hover table-sm   table-dark">
+  <thead>
+    <tr  class="table-dark">
+      <th scope="col" >Range</th>
+      <th scope="col">Type</th>
+      <th scope="col">Reste dans le pipe</th>
+
+    </tr>
+  </thead>
+  <tbody class="table-primary">
+    <tr>
+      <th scope="row">41.224.5.0/24</th>
+      <td>@IP PUBLIC /32</td>
+      <td>{{ lenaddpub32 }} Subnets</td>
+
+    </tr>
+    <tr>
+      <th scope="row">41.224.4.0/24</th>
+      <td>@IP PUBLIC /31</td>
+      <td>{{ lenaddpub31 }} Subnets</td>
+
+    </tr>
+
+   <tr>
+      <th scope="row">196.224.82.0/24</th>
+      <td>@IP PUBLIC /29</td>
+      <td>{{ lenaddpub29 }} Subnets</td>
+
+    </tr>
+
+   <tr>
+      <th scope="row">196.224.81.0/24</th>
+      <td>@IP PUBLIC /28</td>
+      <td>{{ lenaddpub28 }} Subnets</td>
+
+    </tr>
+ <tr>
+      <th scope="row">10.240.100.0/22</th>
+      <td>@IP Privée</td>
+      <td>{{ lenaddpriv }} Subnets</td>
+
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+  <script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{adressepriveutilise}},{{adressepriverestant}}],
+                backgroundColor: [
+               'rgb(  243, 131, 13  )',
+               'rgb( 128, 237, 174 )',
+
+
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+          ],
+          label: 'Population'
+        }],
+        labels: ["@Utilisé","@Reste"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    var config1 = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{adressepublic32utilise}},{{adressepublic32restant}}],
+             backgroundColor: [
+               'rgb(  243, 131, 13  )',
+               'rgb( 128, 237, 174 )',
+
+
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+          ],
+          label: 'Population'
+        }],
+        labels: ["@Utilisé","@Reste"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+
+
+    var config2 = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{adressepublic31utilise}},{{adressepublic31restant}}],
+             backgroundColor: [
+               'rgb(  243, 131, 13  )',
+               'rgb( 128, 237, 174 )',
+
+
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+          ],
+          label: 'Population'
+        }],
+      labels: ["@Utilisé","@Reste"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+
+    var config4 = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{adressepublic28utilise}},{{adressepublic28restant}}],
+            backgroundColor: [
+               'rgb(  243, 131, 13  )',
+               'rgb( 128, 237, 174 )',
+
+
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+          ],
+          label: 'Population'
+        }],
+      labels: ["@Utilisé","@Reste"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+
+
+    var config5 = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{adressepublic29utilise}},{{adressepublic29restant}}],
+           backgroundColor: [
+               'rgb(  243, 131, 13  )',
+               'rgb( 128, 237, 174 )',
+
+
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+          ],
+          label: 'Population'
+        }],
+          labels: ["@Utilisé","@Reste"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('myChart3').getContext('2d');
+      var ctx1 = document.getElementById('myChart1').getContext('2d');
+      var ctx2 = document.getElementById('myChart2').getContext('2d');
+      var ctx4 = document.getElementById('myChart4').getContext('2d');
+      var ctx5 = document.getElementById('myChart5').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+      window.myPie = new Chart(ctx1, config1);
+      window.myPie = new Chart(ctx2, config2);
+      window.myPie = new Chart(ctx4, config4);
+      window.myPie = new Chart(ctx5, config5);
+    };
+  </script>
+
+

@@ -1,0 +1,200 @@
+ 
+ {% load static  %}
+ {% include 'liste_routeur/head.html' %}
+ 
+<!-- end demo code -->
+<style>
+.table{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    border-bottom: solid;
+    border-radius:10px ;
+
+
+
+}
+
+.btn{
+
+  transition: 0.3s;
+
+    border-radius:4px ;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left:1rem ;
+    padding-right:1rem;
+    border-bottom: solid;
+    border-radius:10px ;
+    border: 0;
+    background-color:  white;
+      margin: 1.5rem 0;
+
+}
+.body {
+
+
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+
+</style>
+
+
+<body style="background-color: #eef3f2">
+    <div class="container"> <div class="card ">
+  <div class="row">
+    <div class="col-8">
+
+      <h1>     <a  onclick="exportTableToExcel('example2','REPORTING B2B')" class="link-success">
+           <img src="{% static '/images/excel.png' %}" alt="My image" width="30" >
+             </a>
+
+</h1>
+
+
+              
+
+ <table id="example2" class="table table-sm table-dark table-bordered" style="width:100%">
+  <thead>
+
+
+
+    <tr>
+      <th scope="col">DEVICE</th>
+      <th scope="col">SERVICE INTERNET</th>
+      <th scope="col">SERVICE VOIP</th>
+
+       <th scope="col">SERVICE L2VC </th>
+       <th scope="col">SERVICE  BUSINESS_CLIENT_VSI  </th>
+       <th scope="col">SERVICE BUSINESS_VSI  </th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in reportingB2B %}
+    <tr>
+         <td>{{item.name_device}}</td>
+      <td>{{item.nbr_service_Internet}}</td>
+
+      <td>{{item.nbr_service_voip}}</td>
+      <td>{{item.nbr_service_L2VC}}</td>
+
+       <td>{{item.nbr_service_BUSINESS_CLIENT_VSI}}</td>
+      <td>{{item.nbr_service_BUSINESS_VSI}}</td>
+
+
+
+   {% endfor %}
+
+
+  </tbody>
+</table></div>
+
+  <div class="col-4">
+
+
+  <canvas id="myChart"  width="100" height="30vh"></canvas>
+
+
+                                    </div>
+                                </div></div>
+</div>
+
+
+
+
+    {% block content %}
+
+
+    {% endblock %}
+
+ 
+ 
+<script>
+ 
+
+$(document).ready(function() {
+$('#example2').DataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+});
+} );
+ function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
+</script>
+   <script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{{final_somme_general_nbr_service_Internet}},{{final_somme_general_nbr_service_VOIP}},{{final_somme_general_nbr_service_L2vc}},{{final_somme_general_nbr_service_BUSINESS_CLIENT_VSI}},{{final_somme_general_nbr_service_BUSINESS_VSI}}],
+          backgroundColor: [
+           'rgb( 128, 237, 174 )',
+
+           'rgb(  243, 131, 13  )',
+                   'rgb(   225, 228, 16  )',
+
+      'rgb(   100, 170, 198 )',
+              'rgb(   246, 15, 64   )',
+          ],
+          label: 'Population'
+        }],
+        labels: ["Internet","voip","L2VC","BUSINESS-CLIENT-VSI","BUSINESS-VSI"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+
+
+
+
+
+
+    window.onload = function() {
+      var ctx = document.getElementById('myChart').getContext('2d');
+
+      window.myPie = new Chart(ctx, config);
+
+    };
+  </script>
+</body>
+
+</html>

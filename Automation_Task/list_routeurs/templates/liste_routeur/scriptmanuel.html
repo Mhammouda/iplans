@@ -1,0 +1,68 @@
+ {% include 'liste_routeur/head.html' %}
+ 
+ <div class="container">
+    
+     
+ 
+
+<br>
+ 
+         <div class="col">
+    <h1> <span class="badge badge-warning">SCRIPT MANUEL NEW SERVICE</span></h1>
+    <table id="example1" class="table table-dark table-bordered" style="width:100%">
+        <thead>
+            <tr   >
+<td> nomClient</td>
+  <td> routeur</td>
+  <td> interface</td>
+  <td> vlan</td>
+  <td> debit</td>
+  <td>ipGW</td>
+  <td>VRF</td>
+  <td>trans</td>
+  <td>Date</td>
+  <td>User</td>
+      </tr>
+        </thead>
+        <tbody>
+         
+             
+  {% for item in servicemanuel %}
+
+
+      
+      <td> {{item.nomClient}}</td>
+<td>{{item.routeur}} </td>
+<td> {{item.interface}} </td>
+<td> {{item.vlan}}</td>
+<td> {{item.debit}} </td>
+<td>{{item.ipGW}}</td>
+<td>{{item.VRF}} </td>
+<td>{{item.trans}} </td>
+<td>{{item.date}}</td>
+<td>{{item.user}}</td>  
+      </tr>
+    {% endfor %}
+    </table>
+
+      
+
+
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+$(document).ready(function() {
+$('#example1').DataTable();
+} );
+
+$(document).ready(function() {
+$('#example2').DataTable();
+} );
+
+$(document).ready(function() {
+$('#example3').DataTable();
+} );
+ 
+</script>
+
